@@ -4,7 +4,7 @@ defmodule ProtohackersExs.EchoServerTest do
     {:ok, socket} = :gen_tcp.connect(~c"localhost", 5001, [mode: :binary, active: false])
     assert :gen_tcp.send(socket, "foo") == :ok
     assert :gen_tcp.send(socket, "bar") == :ok
-    :gen_tcp.shutdown(socket)
+    :gen_tcp.shutdown(socket, :write)
 
     assert :gen_tcp.recv(socket, 0, 5000) == {:ok, "foobar"}
 
