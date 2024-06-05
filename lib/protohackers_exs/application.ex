@@ -6,7 +6,8 @@ defmodule ProtohackersExs.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      ProtohackersExs.EchoServer
+      ProtohackersExs.EchoServer,
+      ProtohackersExs.PrimeTime
     ]
     opts = [strategy: :one_for_one, name: ProtohackersExs.Supervisor]
     Supervisor.start_link(children, opts)
