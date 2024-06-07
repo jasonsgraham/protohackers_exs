@@ -9,7 +9,8 @@ defmodule ProtohackersExs.Application do
       ProtohackersExs.EchoServer,
       ProtohackersExs.PrimeTime,
       ProtohackersExs.PriceServer,
-      ProtohackersExs.BudgetChat
+      ProtohackersExs.BudgetChat,
+      ProtohackersExs.UdpServer
     ]
     opts = [strategy: :one_for_one, name: ProtohackersExs.Supervisor]
     Supervisor.start_link(children, opts)
