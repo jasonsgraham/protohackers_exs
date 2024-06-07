@@ -7,7 +7,7 @@ defmodule ProtohackersExs.EchoServer do
     GenServer.start_link(__MODULE__, :no_state)
   end
 
-  defstruct [:listen_socket]
+  defstruct [:listen_socket, :supervisor]
 
   @limit _100_kb = 1024 * 100
 

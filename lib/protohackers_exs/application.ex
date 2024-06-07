@@ -8,7 +8,8 @@ defmodule ProtohackersExs.Application do
     children = [
       ProtohackersExs.EchoServer,
       ProtohackersExs.PrimeTime,
-      ProtohackersExs.PriceServer
+      ProtohackersExs.PriceServer,
+      ProtohackersExs.BudgetChat
     ]
     opts = [strategy: :one_for_one, name: ProtohackersExs.Supervisor]
     Supervisor.start_link(children, opts)

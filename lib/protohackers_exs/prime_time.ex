@@ -7,7 +7,7 @@ defmodule ProtohackersExs.PrimeTime do
     GenServer.start_link(__MODULE__, :no_state)
   end
 
-  defstruct [:listen_socket]
+  defstruct [:listen_socket, :supervisor]
 
   @impl true
   def init(:no_state) do
@@ -22,7 +22,7 @@ defmodule ProtohackersExs.PrimeTime do
 
     case :gen_tcp.listen(5002, listen_options) do
       {:ok, listen_socket} ->
-        dbg(:inet.getopts(listen_socket, [:buffer]))
+        # dbg(:inet.getopts(listen_socket, [:buffer]))
         Logger.info("Starting primetime server on port 5002")
         state = %__MODULE__{listen_socket: listen_socket}
         {:ok, state, {:continue, :accept}}
