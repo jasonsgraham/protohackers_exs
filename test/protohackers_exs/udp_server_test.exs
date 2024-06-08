@@ -1,4 +1,4 @@
-defmodule Protohackers.UDPServerTest do
+defmodule ProtohackersExs.UDPServerTest do
   use ExUnit.Case, async: true
 
   test "insert and retrieve requests" do
