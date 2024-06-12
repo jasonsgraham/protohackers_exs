@@ -111,7 +111,8 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
 
     def encode(%Error{message: message}) do
       Logger.debug("Encoding Error Message")
-      <<0x10, byte_size(message)::8-unsigned-big, message::binary>>
+      # <<0x10, byte_size(message)::8-unsigned-big, message::binary>>
+      <<0x10, byte_size(message)::8, message::binary>>
     end
 
     def encode(%Plate{} = plate) do
