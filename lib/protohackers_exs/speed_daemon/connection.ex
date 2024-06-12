@@ -51,6 +51,7 @@ defmodule ProtohackersExs.SpeedDaemon.Connection do
 
   defp send_message(%__MODULE__{socket: socket}, message) do
     Logger.debug("Sending message: #{inspect(message)}")
+    Logger.debug("    Encoded message is: #{inspect(Message.encode(message))}")
     :gen_tcp.send(socket, Message.encode(message))
   end
 
