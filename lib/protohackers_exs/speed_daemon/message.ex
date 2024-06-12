@@ -1,4 +1,5 @@
 defmodule ProtohackersExs.SpeedDaemon.Message do
+  require Logger
     # Client -> server
 
     defmodule Plate do
@@ -39,6 +40,7 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
 
     # Plate
     def decode(<<0x20, plate_size::8, plate::binary-size(plate_size), timestamp::32, rest::binary>>) do
+      Logger.debug("Got plate message and rest is #{inspect(rest)}")
       message = %Plate{plate: plate, timestamp: timestamp}
       {:ok, message, rest}
     end
@@ -50,11 +52,13 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
 
     # IAmCamera
     def decode(<<0x80, road::16, mile::16, limit::16, rest::binary>>) do
+      Logger.debug("Got camera message and rest is #{inspect(rest)}")
       {:ok, %IAmCamera{road: road, mile: mile, limit: limit}, rest}
     end
 
     # IAmDispatcher
     def decode(<<0x81, numroads::8, roads::size(numroads * 2)-binary, rest::binary>>) do
+      Logger.debug("Got dispatcher message and rest is #{inspect(rest)}")
       roads = for <<road::16 <- roads>>, do: road
       {:ok, %IAmDispatcher{roads: roads}, rest}
     end
@@ -64,6 +68,7 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
           <<0x21, plate_size::8, plate::binary-size(plate_size), road::16, mile1::16,
             timestamp1::32, mile2::16, timestamp2::32, speed::16, rest::binary>>
         ) do
+          Logger.debug("Got ticket message and rest is #{inspect(rest)}")
       message = %Ticket{
         plate: plate,
         road: road,
@@ -85,15 +90,18 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
       {:ok, %Error{message: message}, rest}
     end
 
-    def decode(<<byte, _rest::binary>>) when byte in @type_bytes do
+    def decode(<<byte, rest::binary>>) when byte in @type_bytes do
+      Logger.debug("Got byte #{inspect(byte)} and rest is #{inspect(rest)}")
       :incomplete
     end
 
-    def decode(<<_byte, _rest::binary>>) do
+    def decode(<<byte, rest::binary>>) do
+      Logger.debug("Got bytes outside of normal types #{inspect(byte)} and rest is #{inspect(rest)}")
       :error
     end
 
     def decode(<<>>) do
+      Logger.debug("Got incomplete message")
       :incomplete
     end
 
