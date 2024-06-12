@@ -16,7 +16,6 @@ defmodule ProtohackersExs.SpeedDaemon.Supervisor do
     ]
     children = [
       {Registry, registry_opts},
-      {ProtohackersExs.SpeedDaemon.Connection, []},
       {ProtohackersExs.SpeedDaemon.CentralTicketDispatcher, []},
       {ProtohackersExs.SpeedDaemon.ConnectionSupervisor, []},
       {ProtohackersExs.SpeedDaemon.Acceptor, opts}
