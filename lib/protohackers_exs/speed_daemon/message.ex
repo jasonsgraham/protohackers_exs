@@ -110,31 +110,38 @@ defmodule ProtohackersExs.SpeedDaemon.Message do
     def encode(message)
 
     def encode(%Error{message: message}) do
+      Logger.debug("Encoding Error Message")
       <<0x10, byte_size(message)::8-unsigned-big, message::binary>>
     end
 
     def encode(%Plate{} = plate) do
+      Logger.debug("Encoding Plate Message")
       <<0x20, byte_size(plate.plate)::8, plate.plate::binary, plate.timestamp::32>>
     end
 
     def encode(%WantHeartbeat{interval: interval}) do
+      Logger.debug("Encoding WantHeartbeat Message")
       <<0x40, interval::32>>
     end
 
     def encode(%IAmCamera{road: road, mile: mile, limit: limit}) do
+      Logger.debug("Encoding Camera Message")
       <<0x80, road::16, mile::16, limit::16>>
     end
 
     def encode(%IAmDispatcher{roads: roads}) do
+      Logger.debug("Encoding Dispatch Message")
       encoded_roads = IO.iodata_to_binary(for road <- roads, do: <<road::16>>)
       <<0x81, length(roads)::8, encoded_roads::binary>>
     end
 
     def encode(%Heartbeat{}) do
+      Logger.debug("Encoding Heartbeat Message")
       <<0x41>>
     end
 
     def encode(%Ticket{} = ticket) do
+      Logger.debug("Encoding Ticket Message")
       <<0x21, byte_size(ticket.plate), ticket.plate::binary, ticket.road::16, ticket.mile1::16,
         ticket.timestamp1::32, ticket.mile2::16, ticket.timestamp2::32, ticket.speed::16>>
     end
