@@ -74,7 +74,7 @@ defmodule ProtohackersExs.SpeedDaemon.Connection do
         {:noreply, state}
 
       :error ->
-        send_message(state, %Message.Error{message: "Invalid protocol message!"})
+        send_message(state, %Message.Error{message: "illegal msg"})
         {:stop, :normal, state}
     end
   end
